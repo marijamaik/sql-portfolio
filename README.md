@@ -2,12 +2,31 @@
 
 ## Project Objective
 
-This project demonstrates advanced SQL expertise through comprehensive analysis of e-commerce data. It showcases 43 progressively complex queries that solve real business problems while highlighting specific SQL techniques.
+This project demonstrates advanced SQL expertise through comprehensive analysis of e-commerce data. It showcases 25 progressively complex queries that solve real business problems while highlighting specific SQL techniques.
 
-**Why E-Commerce Domain?**
-- Universal business context
-- Rich data relationships enabling complex query patterns
-- Real-world analytics scenarios (customer segmentation, revenue analysis, cohort studies)
+### Dataset: Brazilian E-Commerce Public Dataset
+
+
+Source: Kaggle - Brazilian E-Commerce Public Dataset by Olist 
+
+https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+#### Why This Dataset?
+
+- Real business data - Actual e-commerce transactions from Brazil
+- Rich relationships - 9 tables with realistic business connections
+- Clean structure - Well-normalized, production-quality data
+- Appropriate size - 100K orders, manageable for learning
+- No sensitive data - Anonymized, safe for portfolio use
+
+#### Dataset Overview
+
+- Orders: 99,441 orders from 2016-2018
+- Customers: 99,441 unique customers
+- Products: 32,951 products across 74 categories
+- Reviews: 99,224 customer reviews with ratings
+- Sellers: 3,095 sellers across Brazil
+- Geography: Order locations across Brazilian states
 
 ### Core SQL Competencies Showcased:
 - **Complex JOINs** - Multi-table relationships with 5+ table joins
@@ -22,44 +41,49 @@ This project demonstrates advanced SQL expertise through comprehensive analysis 
 ### Query Complexity Levels:
 - **Foundation (15 queries)** - Multi-table operations, basic analytics
 - **Intermediate (10 queries)** - Window functions, CTEs, complex business logic  
-- **Advanced (10 queries)** - Recursive patterns, statistical analysis, optimization
-- **Business Intelligence (8 queries)** - Complete analytical frameworks
 
-## Database Design
+## Query Categories
+### Foundational Queries (15 total)
+#### Data Exploration & Basic Analysis
 
-### Schema Overview (6 Tables - Intentionally Lean)
+- 01_basic_exploration.sql - Dataset overview and record counts
+- 02_customer_analysis.sql - Customer demographics and behavior
+- 03_product_performance.sql - Best-selling products and categories
+- 04_geographic_analysis.sql - Sales by Brazilian states and cities
+- 05_temporal_trends.sql - Monthly and seasonal sales patterns
 
-**Why Only 6 Tables?**
-The schema is designed for maximum learning impact with minimal complexity:
-- **Focus on Relationships**: Every table connects meaningfully to others
-- **Real-World Patterns**: Mirrors actual e-commerce database structures
-- **Query Opportunities**: Each relationship enables different SQL techniques
-- **Manageable Scope**: Complex enough for advanced queries, simple enough to understand quickly
+#### Business Metrics & KPIs
 
-```
-customers ──┐
-            ├── orders ──── order_items ──── products ──── categories
-            └── reviews ─────────────────────┘
-```
+- 06_order_analysis.sql - Order sizes, values, and fulfillment
+- 07_seller_performance.sql - Top sellers and performance metrics
+- 08_payment_analysis.sql - Payment methods and installment patterns
+- 09_shipping_analysis.sql - Delivery times and logistics performance
+- 10_review_analysis.sql - Customer satisfaction and review patterns
 
-### Table Relationships & Rationale:
+#### Advanced Filtering & Calculations
 
-**customers → orders (1:many)**
-- Enables customer analytics, cohort analysis, lifetime value calculations
-- Supports window functions for customer ranking and segmentation
+- 11_customer_value.sql - Customer lifetime value and spending tiers
+- 12_product_categories.sql - Category performance and trends
+- 13_price_analysis.sql - Pricing strategies and price ranges
+- 14_seasonal_analysis.sql - Holiday and seasonal shopping patterns
+- 15_data_quality.sql - Missing data analysis and cleanup
 
-**orders → order_items (1:many)**  
-- Classic order header/detail pattern for realistic business queries
-- Enables aggregation challenges and complex JOIN scenarios
+### Intermediate Queries (10 total)
+#### Analytics & Segmentation
 
-**products ← order_items → orders**
-- Many-to-many through junction table for product performance analysis
-- Supports complex analytics on buying patterns and product rankings
+- 01_customer_segmentation.sql - RFM analysis and customer tiers
+- 02_cohort_analysis.sql - Customer retention by acquisition month
+- 03_product_recommendations.sql - Frequently bought together analysis
+- 04_customer_journey.sql - Purchase patterns and lifecycle analysis
 
-**categories → products (1:many)**
-- Hierarchical relationship enabling recursive query demonstrations
-- Category-level analytics and roll-up reporting
+#### Advanced Calculations
 
-**customers → reviews ← products (many:many)**
-- Direct customer-product feedback relationship
-- Enables sentiment analysis and product recommendation queries
+- 05_moving_averages.sql - Sales trends with window functions
+- 06_ranking_analysis.sql - Top performers with ranking functions
+- 07_growth_analysis.sql - Year-over-year and month-over-month growth
+- 08_geographic_insights.sql - Regional performance with CTEs
+
+#### Business Intelligence
+
+- 09_seller_analytics.sql - Seller performance scorecard
+- 10_executive_summary.sql - Key metrics dashboard query

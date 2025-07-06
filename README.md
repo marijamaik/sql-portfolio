@@ -4,14 +4,25 @@
 
 This project demonstrates advanced SQL expertise through comprehensive analysis of e-commerce data. It showcases 25 progressively complex queries that solve real business problems while highlighting specific SQL techniques.
 
-### Dataset: Brazilian E-Commerce Public Dataset
+### Core SQL Competencies Showcased:
+- **Complex JOINs** - Multi-table relationships with 5+ table joins
+- **Subqueries** - Correlated and non-correlated, including EXISTS/NOT EXISTS patterns
+- **Window Functions** - ROW_NUMBER, RANK, LAG/LEAD, NTILE, running totals
+- **CTEs** - Common Table Expressions for readable complex logic
+- **Recursive Queries** - Hierarchical data processing
 
+### Query Complexity Levels:
+- **Foundation (15 queries)** - Multi-table operations, basic analytics
+- **Intermediate (10 queries)** - Window functions, CTEs, complex business logic
+
+
+## Dataset: Brazilian E-Commerce Public Dataset
 
 Source: Kaggle - Brazilian E-Commerce Public Dataset by Olist 
 
 https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
-#### Why This Dataset?
+### Why This Dataset?
 
 - Real business data - Actual e-commerce transactions from Brazil
 - Rich relationships - 9 tables with realistic business connections
@@ -19,7 +30,7 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 - Appropriate size - 100K orders, manageable for learning
 - No sensitive data - Anonymized, safe for portfolio use
 
-#### Dataset Overview
+### Dataset Overview
 
 - Orders: 99,441 orders from 2016-2018
 - Customers: 99,441 unique customers
@@ -27,20 +38,6 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 - Reviews: 99,224 customer reviews with ratings
 - Sellers: 3,095 sellers across Brazil
 - Geography: Order locations across Brazilian states
-
-### Core SQL Competencies Showcased:
-- **Complex JOINs** - Multi-table relationships with 5+ table joins
-- **Subqueries** - Correlated and non-correlated, including EXISTS/NOT EXISTS patterns
-- **Window Functions** - ROW_NUMBER, RANK, LAG/LEAD, NTILE, running totals
-- **CTEs** - Common Table Expressions for readable complex logic
-- **Recursive Queries** - Hierarchical data processing
-- **Advanced Analytics** - Statistical functions, percentiles, cohort analysis
-- **Performance Optimization** - Index strategies, query tuning, execution plans
-- **Business Intelligence** - Customer segmentation, RFM analysis, retention metrics
-
-### Query Complexity Levels:
-- **Foundation (15 queries)** - Multi-table operations, basic analytics
-- **Intermediate (10 queries)** - Window functions, CTEs, complex business logic  
 
 ## Query Categories
 ### Foundational Queries (15 total)

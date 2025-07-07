@@ -1,0 +1,6 @@
+venv/            # Excludes your virtual environment
+__pycache__/     # Excludes Python cache folders
+*.pyc            # Excludes compiled Python files
+*.pkl            # Excludes pickle files (e.g., saved models or data)
+.env             # Excludes environment variable files
+.DS_Store        # Excludes macOS system files

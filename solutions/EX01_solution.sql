@@ -88,8 +88,19 @@ ORDER BY record_count DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    MIN(order_purchase_timestamp)::DATE as earliest_order,
+    MAX(order_purchase_timestamp)::DATE as latest_order,
+    (MAX(order_purchase_timestamp)::DATE - MIN(order_purchase_timestamp)::DATE) as total_days,
+    EXTRACT(YEAR FROM MAX(order_purchase_timestamp)) - EXTRACT(YEAR FROM MIN(order_purchase_timestamp)) as complete_years
+FROM orders
+WHERE order_purchase_timestamp IS NOT NULL;
 
+/* Output:
 
+"earliest_order","latest_order","total_days","complete_years"
+"2016-09-04","2018-10-17",773,"2"
+*/
 
 -- ============================================================================
 -- QUESTION 3: Order Status Distribution

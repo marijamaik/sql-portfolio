@@ -331,7 +331,24 @@ WHERE o.order_status = 'delivered';
 
 -- Your SQL query here:
 
+SELECT 
+    payment_type,
+    COUNT(*) as payment_count,
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) as percentage,
+    ROUND(AVG(payment_value), 2) as avg_payment_value,
+    ROUND(AVG(payment_installments), 1) as avg_installments
+FROM order_payments
+GROUP BY payment_type
+ORDER BY payment_count DESC;
 
+/* Output:
+"payment_type","payment_count","percentage","avg_payment_value","avg_installments"
+"credit_card","76795","73.92","163.32","3.5"
+"boleto","19784","19.04","145.03","1.0"
+"voucher","5775","5.56","65.70","1.0"
+"debit_card","1529","1.47","142.57","1.0"
+"not_defined","3","0.00","0.00","1.0"
+*/
 
 
 -- ============================================================================

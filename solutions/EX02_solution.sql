@@ -153,8 +153,34 @@ LIMIT 25;
 
 -- Your SQL query here:
 
+SELECT 
+    order_id,
+    customer_id,
+    order_status,
+    order_purchase_timestamp,
+    -- With delivery issue analysis:
+    CASE 
+        WHEN order_status = 'canceled' THEN 'Needs refund processing'
+        WHEN order_status = 'processing' THEN 'Needs fulfillment attention'
+        WHEN order_status = 'shipped' THEN 'In transit, monitor delivery'
+        ELSE 'Review needed'
+    END as action_needed
+FROM orders
+WHERE order_status IN ('shipped', 'processing', 'canceled')
+ORDER BY order_purchase_timestamp ASC;
 
-
+/* Output:
+"order_id","customer_id","order_status","order_purchase_timestamp","action_needed"
+"2e7a8482f6fb09756ca50c10d7bfc047","08c5351a6aca1c1589a38f244edeee9d","shipped","2016-09-04 21:15:19","In transit, monitor delivery"
+"e5fa5a7210941f7d56d0208e4e071d35","683c54fc24d40ee9f8a6fc179fd9856c","canceled","2016-09-05 00:15:34","Needs refund processing"
+"809a282bbd5dbcabb6f2f724fca862ec","622e13439d6b5a0b486c435618b2679e","canceled","2016-09-13 15:24:19","Needs refund processing"
+"71303d7e93b399f5bcd537d124c0bcfa","b106b360fe2ef8849fbbd056f777b4d5","canceled","2016-10-02 22:07:52","Needs refund processing"
+"65d1e226dfaeb8cdc42f665422522d14","70fc57eeae292675927697fe03ad3ff5","canceled","2016-10-03 21:01:41","Needs refund processing"
+...
+"a2ac6dad85cf8af5b0afb510a240fe8c","4c2ec60c29d10c34bd49cb88aa85cfc4","canceled","2018-10-03 18:55:29","Needs refund processing"
+"b059ee4de278302d550a3035c4cdb740","856336203359aa6a61bf3826f7d84c49","canceled","2018-10-16 20:16:02","Needs refund processing"
+"10a045cdf6a5650c21e9cfeb60384c16","a4b417188addbc05b26b72d5e44837a1","canceled","2018-10-17 17:30:18","Needs refund processing"
+*/
 
 -- ============================================================================
 -- QUESTION 5: Payment Method Focus

@@ -103,7 +103,43 @@ ORDER BY oi.price DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    customer_id,
+    customer_city,
+    customer_zip_code_prefix
+FROM customers
+WHERE customer_state = 'SP'
+ORDER BY customer_city
+LIMIT 25;
 
+/* Output:
+"customer_id","customer_city","customer_zip_code_prefix"
+"ed35271185aa3ecf2e421970e47e473f","adamantina","17800"
+"9c8238260ea546e75c56fc27c0fedfc8","adamantina","17800"
+"f5219627819a30474a6ef14e1598e7f4","adamantina","17800"
+"5684f8bf0ee27f2003ba2380c4ba8b08","adamantina","17800"
+"cc6a744ba14a060493fb64b97087006c","adamantina","17800"
+"9872961494c04c3939cc4fa43bfaeb75","adamantina","17800"
+"4d32a98e390433a11d785b4078826807","adamantina","17800"
+"370e9b111968bd747c429eb56c54c8e3","adamantina","17800"
+"a54c7810d4a0a3563f11fb6ce6acf771","adamantina","17800"
+"8d530bb376a32c1a88884c941bfa3789","adamantina","17800"
+"60b2dc4d4414526a06f5fe22755855b5","adamantina","17800"
+"7cc0b4bdda5ded8e2710e12b866a2cf3","adamantina","17800"
+"c4ac325fd53cbbb5fefd94260aef1c04","adamantina","17800"
+"cf143d2640cfdce2f9573ed4631b2cc1","adamantina","17800"
+"0ab14736076aeefb2a545f8c89931f9f","adamantina","17800"
+"ddc55f221691ae89eedd4bdcd17014e4","adamantina","17800"
+"e3f08093f6e3b8dfb0fd0c7c165fbc6b","adamantina","17800"
+"26cad29ce2fd0d9203145f2d71b7aa43","adamantina","17800"
+"013b46f9a2576623a655fd9469b7c583","adamantina","17800"
+"f134b34785e8dac47c9ef048c49f0916","adamantina","17800"
+"6bec28a0162e9cf0dac2934b4c158954","adamantina","17800"
+"fe5354f706b809fd278ab2bd1bed05c1","adamantina","17800"
+"e99979ecd47f84f3d8be57c2a1080ef6","adamantina","17800"
+"68795255746d33fae2c9d3557d4e64d6","adamantina","17800"
+"88f6fc71994589a43aa54a32115c7c97","adamantina","17800"
+*/
 
 
 -- ============================================================================

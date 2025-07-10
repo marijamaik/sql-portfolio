@@ -69,7 +69,27 @@ LIMIT 20;
 
 -- Your SQL query here:
 
+SELECT DISTINCT
+    p.product_id,
+    p.product_category_name,
+    oi.price
+FROM products p
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+WHERE oi.price > 100
+ORDER BY oi.price DESC;
 
+/* Output:
+"product_id","product_category_name","price"
+"489ae2aa008f021502940f251d4cce7f","utilidades_domesticas","6735.00"
+"69c590f7ffc7bf8db97190b6cb6ed62e","pcs","6729.00"
+"1bdf5e6731585cf01aa8169c7028d6ad","artes","6499.00"
+"a6492cc69376c469ab6f61d8f44de961","eletroportateis","4799.00"
+...
+"2b62c18e1379676edad99be2c9bf9a9d","malas_acessorios","100.33"
+"5192b3aef1e52554497d72e7f5b97f28","cama_mesa_banho","100.21"
+"f9259c9e7c0f12c70f7a81409680a5ff","esporte_lazer","100.13"
+"c21bd5b6be0663cddb80ec6744d6ca24","esporte_lazer","100.01"
+*/
 
 
 -- ============================================================================

@@ -299,7 +299,22 @@ FROM order_items WHERE price IS NULL;
 
 -- Your SQL query here:
 
+SELECT 
+    COUNT(DISTINCT c.customer_id) AS total_customers,
+    COUNT(DISTINCT o.order_id) AS completed_orders,
+    COUNT(oi.order_item_id) AS total_products_sold,
+    ROUND(AVG(op.payment_value), 2) AS avg_order_value,
+    ROUND(AVG(EXTRACT(DAY FROM (o.order_delivered_customer_date - o.order_purchase_timestamp))), 1) AS avg_delivery_days
+FROM customers c
+LEFT JOIN orders o ON c.customer_id = o.customer_id
+LEFT JOIN order_items oi ON o.order_id = oi.order_id
+LEFT JOIN order_payments op ON o.order_id = op.order_id
+WHERE o.order_status = 'delivered';
 
+/* Output:
+"total_customers","completed_orders","total_products_sold","avg_order_value","avg_delivery_days"
+"96478","96478","115038","171.91","12.0"
+*/
 
 
 -- ============================================================================

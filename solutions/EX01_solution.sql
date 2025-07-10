@@ -409,5 +409,47 @@ WHERE review_score IS NOT NULL;
 
 -- Your SQL query here:
 
+SELECT 
+    EXTRACT(YEAR FROM order_purchase_timestamp) as year,
+    EXTRACT(MONTH FROM order_purchase_timestamp) as month,
+    COUNT(*) as order_count,
+    COUNT(DISTINCT customer_id) as unique_customers,
+    ROUND(AVG(op.payment_value), 2) as avg_order_value
+FROM orders o
+LEFT JOIN order_payments op ON o.order_id = op.order_id
+WHERE order_purchase_timestamp IS NOT NULL
+GROUP BY 
+    EXTRACT(YEAR FROM order_purchase_timestamp),
+    EXTRACT(MONTH FROM order_purchase_timestamp)
+ORDER BY year, month;
+
+/* Output:
+"year","month","order_count","unique_customers","avg_order_value"
+"2016","9","4","4","84.08"
+"2016","10","342","324","172.78"
+"2016","12","1","1","19.62"
+"2017","1","850","800","162.93"
+"2017","2","1886","1780","154.78"
+"2017","3","2837","2682","158.57"
+"2017","4","2571","2404","162.50"
+"2017","5","3944","3700","150.33"
+"2017","6","3436","3245","148.80"
+"2017","7","4317","4026","137.22"
+"2017","8","4550","4331","148.22"
+"2017","9","4516","4285","161.15"
+"2017","10","4860","4631","160.43"
+"2017","11","7863","7544","151.96"
+"2017","12","5895","5673","149.01"
+"2018","1","7563","7269","147.43"
+"2018","2","6952","6728","142.76"
+"2018","3","7512","7211","154.37"
+"2018","4","7209","6939","161.02"
+"2018","5","7135","6873","161.74"
+"2018","6","6419","6167","159.51"
+"2018","7","6507","6292","163.91"
+"2018","8","6698","6512","152.65"
+"2018","9","16","16","277.47"
+"2018","10","4","4","147.42"
+*/
 
 -- ============================================================================

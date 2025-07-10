@@ -145,8 +145,29 @@ ORDER BY order_count DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    customer_state,
+    COUNT(*) as customer_count,
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) as percentage
+FROM customers
+WHERE customer_state IS NOT NULL
+GROUP BY customer_state
+ORDER BY customer_count DESC
+LIMIT 10;
 
-
+/* Output:
+"customer_state","customer_count","percentage"
+"SP","41746","41.98"
+"RJ","12852","12.92"
+"MG","11635","11.70"
+"RS","5466","5.50"
+"PR","5045","5.07"
+"SC","3637","3.66"
+"BA","3380","3.40"
+"DF","2140","2.15"
+"ES","2033","2.04"
+"GO","2020","2.03"
+*/
 
 -- ============================================================================
 -- QUESTION 5: Product Categories

@@ -112,7 +112,25 @@ WHERE order_purchase_timestamp IS NOT NULL;
 
 -- Your SQL query here:
 
+SELECT 
+    order_status,
+    COUNT(*) as order_count,
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) as percentage
+FROM orders
+GROUP BY order_status
+ORDER BY order_count DESC;
 
+/* Output:
+"order_status","order_count","percentage"
+"delivered","96478","97.02"
+"shipped","1107","1.11"
+"canceled","625","0.63"
+"unavailable","609","0.61"
+"invoiced","314","0.32"
+"processing","301","0.30"
+"created","5","0.01"
+"approved","2","0.00"
+*/
 
 
 -- ============================================================================

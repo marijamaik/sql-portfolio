@@ -181,7 +181,34 @@ LIMIT 10;
 
 -- Your SQL query here:
 
+SELECT 
+    COALESCE(p.product_category_name, 'Unknown') as category,
+    COUNT(DISTINCT p.product_id) as products_in_category,
+    COUNT(oi.order_id) as times_ordered
+FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+GROUP BY p.product_category_name
+ORDER BY times_ordered DESC
+LIMIT 15;
 
+/* Output:
+"category","products_in_category","times_ordered"
+"cama_mesa_banho","3029","11115"
+"beleza_saude","2444","9670"
+"esporte_lazer","2867","8641"
+"moveis_decoracao","2657","8334"
+"informatica_acessorios","1639","7827"
+"utilidades_domesticas","2335","6964"
+"relogios_presentes","1329","5991"
+"telefonia","1134","4545"
+"ferramentas_jardim","753","4347"
+"automotivo","1900","4235"
+"brinquedos","1411","4117"
+"cool_stuff","789","3796"
+"perfumaria","868","3419"
+"bebes","919","3065"
+"eletronicos","517","2767"
+*/
 
 
 -- ============================================================================

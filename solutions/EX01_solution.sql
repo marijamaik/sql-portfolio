@@ -453,3 +453,13 @@ ORDER BY year, month;
 */
 
 -- ============================================================================
+
+/*
+INSIGHTS:
+- Dataset spans ~2 years of Brazilian e-commerce data
+- High order completion rate (typically 97%+)
+- São Paulo (SP) dominates customer geography
+- Credit cards are the primary payment method
+- High customer satisfaction (average 4+ stars)
+- Clear seasonal patterns in order volume
+*/

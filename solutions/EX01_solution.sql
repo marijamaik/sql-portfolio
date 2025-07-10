@@ -363,8 +363,38 @@ ORDER BY payment_count DESC;
 
 -- Your SQL query here:
 
+-- Review score distribution:
+SELECT 
+    review_score,
+    COUNT(*) as review_count,
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) as percentage
+FROM order_reviews
+WHERE review_score IS NOT NULL
+GROUP BY review_score
+ORDER BY review_score;
 
+/* Output:
+"review_score","review_count","percentage"
+1,"11282","11.46"
+2,"3114","3.16"
+3,"8097","8.23"
+4,"19007","19.31"
+5,"56910","57.83"
+*/
 
+-- Overall satisfaction metrics:
+SELECT 
+    COUNT(*) as total_reviews,
+    ROUND(AVG(review_score), 2) as avg_rating,
+    COUNT(CASE WHEN review_score >= 4 THEN 1 END) as positive_reviews,
+    ROUND(100.0 * COUNT(CASE WHEN review_score >= 4 THEN 1 END) / COUNT(*), 2) as positive_percentage
+FROM order_reviews
+WHERE review_score IS NOT NULL;
+
+/* Output:
+"total_reviews","avg_rating","positive_reviews","positive_percentage"
+"98410","4.09","75917","77.14"
+*/
 
 -- ============================================================================
 -- QUESTION 10: Monthly Order Pattern

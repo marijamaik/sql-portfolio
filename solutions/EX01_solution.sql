@@ -224,17 +224,66 @@ LIMIT 15;
 -- Your SQL queries here:
 
 -- a) Orphaned orders:
+SELECT 
+    'Orphaned Orders' as check_name,
+    COUNT(*) as issue_count
+FROM orders o
+LEFT JOIN customers c ON o.customer_id = c.customer_id
+WHERE c.customer_id IS NULL;
 
+/* Output:
+"check_name","issue_count"
+"Orphaned Orders","0"
+*/
 
 -- b) Invalid product references:
+SELECT 
+    'Invalid Product References' as check_name,
+    COUNT(*) as issue_count
+FROM order_items oi
+LEFT JOIN products p ON oi.product_id = p.product_id
+WHERE p.product_id IS NULL;
 
+/* Output:
+"check_name","issue_count"
+"Invalid Product References","0"
+*/
 
 -- c) Orders without items:
+SELECT 
+    'Orders Without Items' as check_name,
+    COUNT(*) as issue_count
+FROM orders o
+LEFT JOIN order_items oi ON o.order_id = oi.order_id
+WHERE oi.order_id IS NULL;
 
+/* Output:
+"check_name","issue_count"
+"Orders Without Items","775"
+*/
 
 -- d) Critical null values check:
+SELECT 
+    'Customer ID nulls' as field_check,
+    COUNT(*) as null_count
+FROM orders WHERE customer_id IS NULL
+UNION ALL
+SELECT 
+    'Order purchase timestamp nulls',
+    COUNT(*) 
+FROM orders WHERE order_purchase_timestamp IS NULL
+UNION ALL
+SELECT 
+    'Product price nulls',
+    COUNT(*)
+FROM order_items WHERE price IS NULL;
 
-
+/* Output:
+"field_check","null_count"
+"Customer ID nulls","0"
+"Order purchase timestamp nulls","0"
+"Product price nulls","0"
+*/
 
 
 -- ============================================================================

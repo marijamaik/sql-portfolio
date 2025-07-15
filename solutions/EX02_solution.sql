@@ -195,8 +195,34 @@ ORDER BY order_purchase_timestamp ASC;
 
 -- Your SQL query here:
 
+SELECT 
+    op.order_id,
+    op.payment_value,
+    op.payment_installments
+FROM order_payments op
+WHERE op.payment_type = 'credit_card'
+  AND op.payment_installments > 1
+ORDER BY op.payment_value DESC
+LIMIT 15;
 
-
+/* Output:
+"order_id","payment_value","payment_installments"
+"0812eb902a67711a1cb742b3cdaa65ae","6929.31",8
+"a96610ab360d42a2e5335a3998b4718a","4950.34",10
+"b4c4b76c642808cbe472a32b86cddc95","4809.44",5
+"199af31afc78c699f0dbf71fb178d4d4","4764.34",8
+"8dbc85d1447242f3b127dda390d56e19","4681.78",8
+"426a9742b533fc6fed17d1fd6d143d7e","4513.32",10
+"68101694e5c5dc7330c91e1bbc36214f","4175.26",10
+"9a3966c23190dbdbaabed08e8429c006","4042.74",5
+"86c4eab1571921a6a6e248ed312f5a5a","4016.91",8
+"9de73f3e6157169ad6c32b9f313c7dcb","3899.00",10
+"a53e05ecd2ed1f46a2b8e1f5828be7c6","3826.80",10
+"d3f66901a6743e15f9311547cc623b91","3792.59",8
+"fc20b8e282da6f3fbcdd3a3cedecb723","3782.19",10
+"e85c92ee6a3ba1ef47e41c23286314d9","3736.22",10
+"3a4b013e014723cc38c9faa8ffdc6387","3526.46",8
+*/
 
 -- ============================================================================
 -- QUESTION 6: Product Category Search

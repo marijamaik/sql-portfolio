@@ -141,7 +141,34 @@ LIMIT 20;
 
 -- Your SQL query here:
 
+SELECT 
+    o.order_id,
+    c.customer_city,
+    c.customer_state,
+    o.order_purchase_timestamp,
+    o.order_approved_at,
+    o.order_delivered_carrier_date,
+    o.order_delivered_customer_date,
+    op.payment_type,
+    ROUND(SUM(op.payment_value), 2) as total_payment_value,
+    EXTRACT(DAY FROM (o.order_delivered_customer_date - o.order_purchase_timestamp)) as days_to_delivery,
+    o.order_status
+FROM orders o
+LEFT JOIN customers c ON o.customer_id = c.customer_id
+LEFT JOIN order_payments op ON o.order_id = op.order_id
+WHERE EXTRACT(YEAR FROM o.order_purchase_timestamp) = 2018
+GROUP BY o.order_id, c.customer_city, c.customer_state, o.order_purchase_timestamp, o.order_approved_at, o.order_delivered_carrier_date, o.order_delivered_customer_date, op.payment_type, o.order_status
+ORDER BY days_to_delivery DESC NULLS LAST;
 
+/* Output:
+"order_id","customer_city","customer_state","order_purchase_timestamp","order_approved_at","order_delivered_carrier_date","order_delivered_customer_date","payment_type","total_payment_value","days_to_delivery","order_status"
+"1b3190b2dfa9d789e1f14c05b647a14a","rio de janeiro","RJ","2018-02-23 14:57:35","2018-02-23 15:16:14","2018-02-26 18:49:07","2018-09-19 23:24:07","credit_card","162.25","208","delivered"
+"47b40429ed8cce3aee9199792275433f","salto","SP","2018-01-03 09:44:01","2018-01-03 10:31:15","2018-02-06 01:48:28","2018-07-13 20:51:31","credit_card","453.33","191","delivered"
+"4fbc8d6f2f4db3e789d5a876fa349b56","capinzal do norte","MA","2018-02-02 21:38:36","2018-02-03 20:10:18","2018-02-08 01:04:18","2018-07-20 23:37:50","credit_card","307.24","168","delivered"
+...
+"24c30ddeb5a4b85a61bbb58b9e3d66c9","itu","SP","2018-08-07 16:57:23","2018-08-09 03:35:18",NULL,NULL,"boleto","50.45",NULL,"canceled"
+"14a05c02d483800864e5c19a3a7f0ee2","sao paulo","SP","2018-08-18 06:29:22","2018-08-20 16:35:15","2018-08-21 14:43:00",NULL,"debit_card","124.22",NULL,"shipped"
+*/
 
 
 -- ============================================================================

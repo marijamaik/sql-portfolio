@@ -224,8 +224,33 @@ FROM order_metrics;
 
 -- Your SQL query here:
 
+SELECT
+    p.product_category_name,
+    ROUND(AVG(r.review_score), 2) AS avg_review_score,
+    COUNT(r.review_id) AS review_count,
+    ROUND(100.0 * COUNT(CASE WHEN r.review_score = 5 THEN 1 END) / COUNT(r.review_id), 2) AS five_star_percentage
+FROM order_reviews r
+JOIN orders o ON r.order_id = o.order_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+WHERE p.product_category_name IS NOT NULL
+  AND r.review_score IS NOT NULL
+GROUP BY p.product_category_name
+HAVING COUNT(r.review_id) >= 100
+ORDER BY avg_review_score DESC;
 
-
+/* Output:
+"product_category_name","avg_review_score","review_count","five_star_percentage"
+"livros_interesse_geral","4.45","549","72.50"
+"livros_tecnicos","4.36","263","70.34"
+"malas_acessorios","4.31","1086","64.73"
+"alimentos_bebidas","4.31","274","63.87"
+"fashion_calcados","4.25","256","64.06"
+...
+"telefonia_fixa","3.68","262","45.80"
+"fashion_roupa_masculina","3.64","130","52.31"
+"moveis_escritorio","3.49","1677","36.79"
+*/
 
 -- ============================================================================
 -- QUESTION 7: Seller Performance Metrics

@@ -299,7 +299,47 @@ LIMIT 20;
 
 -- Your SQL query here:
 
+SELECT 
+    c.customer_state,
+    COUNT(DISTINCT c.customer_id) as customer_count,
+    COUNT(o.order_id) as total_orders,
+    ROUND(SUM(op.payment_value), 2) as total_revenue,
+    ROUND(AVG(op.payment_value), 2) as avg_order_value,
+    ROUND(COUNT(o.order_id)::DECIMAL / COUNT(DISTINCT c.customer_id), 2) as avg_orders_per_customer
+FROM customers c
+LEFT JOIN orders o ON c.customer_id = o.customer_id
+LEFT JOIN order_payments op ON o.order_id = op.order_id
+GROUP BY c.customer_state
+HAVING COUNT(DISTINCT c.customer_id) >= 100
+ORDER BY total_revenue DESC NULLS LAST;
 
+/* Output:
+"customer_state","customer_count","total_orders","total_revenue","avg_order_value","avg_orders_per_customer"
+"SP","41746","43623","5998226.96","137.50","1.04"
+"RJ","12852","13527","2144379.69","158.53","1.05"
+"MG","11635","12102","1872257.26","154.71","1.04"
+"RS","5466","5668","890898.54","157.18","1.04"
+"PR","5045","5262","811156.38","154.15","1.04"
+"SC","3637","3754","623086.43","165.98","1.03"
+"BA","3380","3610","616645.82","170.82","1.07"
+"DF","2140","2204","355141.08","161.13","1.03"
+"GO","2020","2112","350092.31","165.76","1.05"
+"ES","2033","2107","325967.55","154.71","1.04"
+"PE","1652","1728","324850.44","187.99","1.05"
+"CE","1336","1398","279464.03","199.90","1.05"
+"PA","975","1011","218295.85","215.92","1.04"
+"MT","907","958","187029.29","195.23","1.06"
+"MA","747","767","152523.02","198.86","1.03"
+"PB","536","570","141545.72","248.33","1.06"
+"MS","715","736","137534.84","186.87","1.03"
+"PI","495","524","108523.97","207.11","1.06"
+"RN","485","522","102718.13","196.78","1.08"
+"AL","413","427","96962.06","227.08","1.03"
+"SE","350","361","75246.25","208.44","1.03"
+"TO","280","301","61485.33","204.27","1.08"
+"RO","253","261","60866.20","233.20","1.03"
+"AM","148","154","27966.93","181.60","1.04"
+*/
 
 
 -- ============================================================================

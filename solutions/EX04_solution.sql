@@ -359,7 +359,35 @@ ORDER BY total_revenue DESC NULLS LAST;
 
 -- Your SQL query here:
 
+SELECT 
+    p.product_category_name,
+    COUNT(DISTINCT p.product_id) as unique_products,
+    COUNT(oi.order_item_id) as total_quantity_sold,
+    ROUND(SUM(oi.price), 2) as total_revenue,
+    ROUND(AVG(oi.price), 2) as avg_price_per_item,
+    COUNT(DISTINCT oi.order_id) as orders_containing_category
+FROM products p
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+WHERE p.product_category_name IS NOT NULL
+GROUP BY p.product_category_name
+ORDER BY total_revenue DESC
+LIMIT 12;
 
+/* Output:
+"product_category_name","unique_products","total_quantity_sold","total_revenue","avg_price_per_item","orders_containing_category"
+"beleza_saude","2444","9670","1258681.34","130.16","8836"
+"relogios_presentes","1329","5991","1205005.68","201.14","5624"
+"cama_mesa_banho","3029","11115","1036988.68","93.30","9417"
+"esporte_lazer","2867","8641","988048.97","114.34","7720"
+"informatica_acessorios","1639","7827","911954.32","116.51","6689"
+"moveis_decoracao","2657","8334","729762.49","87.56","6449"
+"cool_stuff","789","3796","635290.85","167.36","3632"
+"utilidades_domesticas","2335","6964","632248.66","90.79","5884"
+"automotivo","1900","4235","592720.11","139.96","3897"
+"ferramentas_jardim","753","4347","485256.46","111.63","3518"
+"brinquedos","1411","4117","483946.60","117.55","3886"
+"bebes","919","3065","411764.89","134.34","2885"
+*/
 
 
 -- ============================================================================
@@ -374,14 +402,56 @@ ORDER BY total_revenue DESC NULLS LAST;
 -- - First order date and last order date
 -- - Customer lifespan in days (last order - first order)
 -- Use INNER JOIN to show only customers who have made purchases
--- Filter for customers with at least 2 orders
 -- Sort by total spent (highest first)
 -- Limit to 25 results
 
 -- Your SQL query here:
 
+SELECT 
+    c.customer_id,
+    c.customer_city,
+    c.customer_state,
+    ROUND(SUM(op.payment_value), 2) as total_spent,
+    COUNT(DISTINCT o.order_id) as total_orders,
+    ROUND(AVG(op.payment_value), 2) as avg_order_value,
+    MIN(o.order_purchase_timestamp) as first_order_date,
+    MAX(o.order_purchase_timestamp) as last_order_date,
+    EXTRACT(DAY FROM (MAX(o.order_purchase_timestamp) - MIN(o.order_purchase_timestamp))) as customer_lifespan_days
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+INNER JOIN order_payments op ON o.order_id = op.order_id
+GROUP BY c.customer_id, c.customer_city, c.customer_state
+ORDER BY total_spent DESC
+LIMIT 25;
 
-
+/* Output:
+"customer_id","customer_city","customer_state","total_spent","total_orders","avg_order_value","first_order_date","last_order_date","customer_lifespan_days"
+"1617b1357756262bfa56ab541c47bc16","rio de janeiro","RJ","13664.08","1","13664.08","2017-09-29 15:24:52","2017-09-29 15:24:52","0"
+"ec5b2ba62e574342386871631fafd3fc","vila velha","ES","7274.88","1","7274.88","2018-07-15 14:49:44","2018-07-15 14:49:44","0"
+"c6e2731c5b391845f6800c97401a43a9","campo grande","MS","6929.31","1","6929.31","2017-02-12 20:37:36","2017-02-12 20:37:36","0"
+"f48d464a0baaea338cb25f816991ab1f","vitoria","ES","6922.21","1","6922.21","2018-07-25 18:10:17","2018-07-25 18:10:17","0"
+"3fd6777bbce08a352fddd04e4a7cc8f6","marilia","SP","6726.66","1","6726.66","2017-05-24 18:14:34","2017-05-24 18:14:34","0"
+"05455dfa7cd02f13d132aa7a6a9729c6","divinopolis","MG","6081.54","1","6081.54","2017-11-24 11:03:35","2017-11-24 11:03:35","0"
+"df55c14d1476a9a3467f131269c2477f","araruama","RJ","4950.34","1","4950.34","2017-04-01 15:58:40","2017-04-01 15:58:40","0"
+"e0a2412720e9ea4f26c1ac985f6a7358","goiania","GO","4809.44","1","4809.44","2018-07-12 12:08:36","2018-07-12 12:08:36","0"
+"24bbf5fd2f2e1b359ee7de94defc4a15","maua","SP","4764.34","1","4764.34","2017-04-18 18:50:13","2017-04-18 18:50:13","0"
+"3d979689f636322c62418b6346b1c6d2","joao pessoa","PB","4681.78","1","4681.78","2018-06-22 12:23:19","2018-06-22 12:23:19","0"
+"1afc82cd60e303ef09b4ef9837c9505c","sao paulo","SP","4513.32","1","4513.32","2018-08-03 21:10:16","2018-08-03 21:10:16","0"
+"cc803a2c412833101651d3f90ca7de24","niteroi","RJ","4445.50","1","4445.50","2018-05-31 22:57:07","2018-05-31 22:57:07","0"
+"926b6a6fb8b6081e00b335edaf578d35","brasilia","DF","4194.76","1","2097.38","2017-04-18 20:37:26","2017-04-18 20:37:26","0"
+"35a413c7ca3c69756cb75867d6311c0d","bom jesus do galho","MG","4175.26","1","4175.26","2018-03-29 10:31:29","2018-03-29 10:31:29","0"
+"e9b0d0eb3015ef1c9ce6cf5b9dcbee9f","nova lima","MG","4163.51","1","4163.51","2018-07-29 08:39:48","2018-07-29 08:39:48","0"
+"3be2c536886b2ea4668eced3a80dd0bb","belem","PA","4042.74","1","4042.74","2017-02-04 18:54:15","2017-02-04 18:54:15","0"
+"eb7a157e8da9c488cd4ddc48711f1097","jundiai","SP","4034.44","1","2017.22","2018-06-05 12:45:17","2018-06-05 12:45:17","0"
+"c6695e3b1e48680db36b487419fb0398","sao paulo","SP","4016.91","1","4016.91","2017-03-18 20:08:04","2017-03-18 20:08:04","0"
+"31e83c01fce824d0ff786fcd48dad009","rio de janeiro","RJ","3979.55","1","3979.55","2018-05-14 15:15:30","2018-05-14 15:15:30","0"
+"addc91fdf9c2b3045497b57fc710e820","para de minas","MG","3826.80","1","3826.80","2018-01-26 14:30:21","2018-01-26 14:30:21","0"
+"19b32919fa1198aefc0773ee2e46e693","recife","PE","3792.59","1","3792.59","2018-03-21 15:06:34","2018-03-21 15:06:34","0"
+"58acc4e2788bf6fc445fddcce9c1db03","mafra","SC","3782.19","1","3782.19","2017-03-01 10:02:02","2017-03-01 10:02:02","0"
+"66657bf1753d82d0a76f2c4719ab8b85","brasilia","DF","3736.22","1","3736.22","2017-02-10 10:19:22","2017-02-10 10:19:22","0"
+"7d03bf20fa96e80468bbf678eebbcb3f","gaspar","SC","3666.42","1","3666.42","2017-05-10 15:05:47","2017-05-10 15:05:47","0"
+"39d6658037b1b5a07d0a24d423f0bd19","brasilia","DF","3602.47","1","3602.47","2017-02-21 18:35:38","2017-02-21 18:35:38","0"
+*/
 
 -- ============================================================================
 -- QUESTION 9: Product and Seller Relationship

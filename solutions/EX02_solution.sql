@@ -514,3 +514,17 @@ ORDER BY order_purchase_timestamp;
 
 -- ============================================================================
 
+/*
+Insights:
+- Date filtering reveals clear seasonal patterns (Dec 2017 peak)
+- Geographic concentration: SP dominates both customers and sellers
+- Price segmentation: Clear tiers in product pricing
+- Payment preferences: Credit cards dominate high-value orders
+- Status distribution: 97%+ delivery success rate
+- Electronics categories command premium pricing
+- São Paulo metropolitan area is core market
+- Credit card installments enable higher order values
+- Delivery performance varies significantly by geography
+- Customer satisfaction correlates with delivery speed
+- Data quality issues: Missing delivery dates for 'delivered' orders
+*/

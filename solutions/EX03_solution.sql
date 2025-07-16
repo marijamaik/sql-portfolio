@@ -68,8 +68,24 @@ ORDER BY order_year, order_month;
 
 -- Your SQL query here:
 
+SELECT
+    payment_type,
+    COUNT(*) AS payment_count,
+    ROUND(AVG(payment_value), 2) AS avg_payment_value,
+    SUM(payment_value) AS total_revenue,
+    ROUND(AVG(payment_installments), 1) AS avg_installments
+FROM order_payments
+GROUP BY payment_type
+ORDER BY total_revenue DESC;
 
-
+/* Output:
+"payment_type","payment_count","avg_payment_value","total_revenue","avg_installments"
+"credit_card","76795","163.32","12542084.19","3.5"
+"boleto","19784","145.03","2869361.27","1.0"
+"voucher","5775","65.70","379436.87","1.0"
+"debit_card","1529","142.57","217989.79","1.0"
+"not_defined","3","0.00","0.00","1.0"
+*/
 
 -- ============================================================================
 -- QUESTION 3: State-wise Customer Distribution

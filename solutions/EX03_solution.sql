@@ -311,7 +311,48 @@ LIMIT 15;
 
 -- Your SQL query here:
 
+SELECT 
+    c.customer_state,
+    COUNT(o.order_id) as delivered_orders,
+    ROUND(AVG(EXTRACT(DAY FROM (o.order_delivered_customer_date - o.order_purchase_timestamp))), 1) as avg_delivery_days,
+    ROUND(MIN(EXTRACT(DAY FROM (o.order_delivered_customer_date - o.order_purchase_timestamp))), 1) as fastest_delivery,
+    ROUND(MAX(EXTRACT(DAY FROM (o.order_delivered_customer_date - o.order_purchase_timestamp))), 1) as slowest_delivery
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+WHERE o.order_status = 'delivered'
+  AND o.order_delivered_customer_date IS NOT NULL
+  AND o.order_purchase_timestamp IS NOT NULL
+GROUP BY c.customer_state
+HAVING COUNT(o.order_id) >= 100
+ORDER BY avg_delivery_days ASC;
 
+/* Output:
+"customer_state","delivered_orders","avg_delivery_days","fastest_delivery","slowest_delivery"
+"SP","40494","8.3","0.0","191.0"
+"PR","4923","11.5","1.0","97.0"
+"MG","11354","11.5","1.0","187.0"
+"DF","2080","12.5","1.0","68.0"
+"SC","3546","14.5","1.0","98.0"
+"RJ","12350","14.8","0.0","208.0"
+"RS","5344","14.8","1.0","186.0"
+"MS","701","15.2","3.0","58.0"
+"GO","1957","15.2","1.0","181.0"
+"ES","1995","15.3","2.0","209.0"
+"TO","274","17.2","5.0","58.0"
+"MT","886","17.6","3.0","79.0"
+"PE","1593","18.0","1.0","166.0"
+"RN","474","18.8","1.0","174.0"
+"RO","243","18.9","7.0","50.0"
+"BA","3256","18.9","0.0","167.0"
+"PI","476","19.0","2.0","194.0"
+"PB","517","20.0","5.0","102.0"
+"CE","1279","20.8","2.0","168.0"
+"SE","335","21.0","6.0","194.0"
+"MA","717","21.1","3.0","168.0"
+"PA","946","23.3","4.0","195.0"
+"AL","397","24.0","4.0","90.0"
+"AM","145","26.0","4.0","138.0"
+*/
 
 
 -- ============================================================================

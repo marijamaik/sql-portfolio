@@ -320,11 +320,44 @@ LIMIT 10;
 
 -- a) Small orders (< 50 BRL):
 
+SELECT 
+    order_id,
+    payment_value,
+    payment_installments
+FROM order_payments
+WHERE payment_value < 50
+ORDER BY payment_value ASC;
+
+/* Output for small orders:
+"order_id","payment_value","payment_installments"
+"b23878b3e8eb4d25a158f57d96331b18","0.00",1
+"6ccb433e00daae1283ccc956189c82ae","0.00",1
+"45ed6e85398a87c253db47c2d9f48216","0.00",1
+...
+"4adbbb43be305843794e05fc4265f143","49.99",1
+"9c82bca31120157620aa240857a67802","49.99",5
+"7af96e4998e17a87ca43a79b93e112c9","49.99",1
+*/
 
 -- b) Large orders (> 500 BRL):
 
+SELECT 
+    order_id,
+    payment_value,
+    payment_installments
+FROM order_payments
+WHERE payment_value > 500
+ORDER BY payment_value DESC;
 
-
+/* Output for large orders:
+"order_id","payment_value","payment_installments"
+"03caa2c082116e1d31e67e9ae3700499","13664.08",1
+"736e1922ae60d0d6a89247b851902527","7274.88",1
+"0812eb902a67711a1cb742b3cdaa65ae","6929.31",8
+...
+"4ac61ca13c944e7c498a7b0a65f8dcc3","500.13",4
+"661e77bbf3e487db278f9fdef584550b","500.04",10
+*/
 
 -- ============================================================================
 -- QUESTION 9: Delivery Performance

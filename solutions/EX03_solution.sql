@@ -367,8 +367,36 @@ ORDER BY avg_delivery_days ASC;
 
 -- Your SQL query here:
 
+SELECT 
+    EXTRACT(DOW FROM order_purchase_timestamp) + 1 as day_of_week,
+    CASE
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 0 THEN 'Monday'
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 1 THEN 'Tuesday'
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 2 THEN 'Wednesday'
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 3 THEN 'Thursday'
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 4 THEN 'Friday'
+        WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 5 THEN 'Saturday'
+		WHEN EXTRACT(DOW FROM order_purchase_timestamp) = 6 THEN 'Sunday'
+    END as day_name,
+    COUNT(o.order_id) as order_count,
+    ROUND(AVG(op.payment_value), 2) as avg_order_value,
+    ROUND(SUM(op.payment_value), 2) as total_revenue
+FROM orders o
+JOIN order_payments op ON o.order_id = op.order_id
+WHERE o.order_purchase_timestamp IS NOT NULL
+GROUP BY EXTRACT(DOW FROM order_purchase_timestamp)
+ORDER BY EXTRACT(DOW FROM order_purchase_timestamp);
 
-
+/* Output:
+"day_of_week","day_name","order_count","avg_order_value","total_revenue"
+"1","Monday","12425","150.70","1872456.36"
+"2","Tuesday","16875","155.40","2622457.97"
+"3","Wednesday","16695","153.38","2560743.03"
+"4","Thursday","16274","153.20","2493114.66"
+"5","Friday","15470","154.14","2384544.22"
+"6","Saturday","14768","156.22","2307128.20"
+"7","Sunday","11379","155.41","1768427.68"
+*/
 
 -- ============================================================================
 -- QUESTION 10: High-Value Customer Analysis

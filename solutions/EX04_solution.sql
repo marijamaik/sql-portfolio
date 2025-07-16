@@ -607,20 +607,68 @@ LIMIT 50;
 -- Your SQL queries here:
 
 -- a) Orders without payment information:
+SELECT 
+    'Orders without payment information' as issue_type,
+    COUNT(o.order_id) as missing_count
+FROM orders o
+LEFT JOIN order_payments op ON o.order_id = op.order_id
+WHERE op.order_id IS NULL;
 
+/* Output:
+"issue_type","missing_count"
+"Orders without payment information","1"
+*/
 
 -- b) Orders without order items:
+SELECT 
+    'Orders without order items' as issue_type,
+    COUNT(o.order_id) as missing_count
+FROM orders o
+LEFT JOIN order_items oi ON o.order_id = oi.order_id
+WHERE oi.order_id IS NULL;
 
+/* Output:
+"issue_type","missing_count"
+"Orders without order items","775"
+*/
 
 -- c) Order items without corresponding orders:
+SELECT 
+    'Order items without orders' as issue_type,
+    COUNT(oi.order_id) as missing_count
+FROM order_items oi
+LEFT JOIN orders o ON oi.order_id = o.order_id
+WHERE o.order_id IS NULL;
 
+/* Output:
+"issue_type","missing_count"
+"Order items without orders","0"
+*/
 
 -- d) Reviews without corresponding orders:
+SELECT 
+    'Reviews without orders' as issue_type,
+    COUNT(r.order_id) as missing_count
+FROM order_reviews r
+LEFT JOIN orders o ON r.order_id = o.order_id
+WHERE o.order_id IS NULL;
 
+/* Output:
+"issue_type","missing_count"
+"Reviews without orders","0"
+*/
 
 -- e) Products never ordered:
+SELECT 
+    'Products never ordered' as issue_type,
+    COUNT(p.product_id) as missing_count
+FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+WHERE oi.product_id IS NULL;
 
-
-
+/* Output:
+"issue_type","missing_count"
+"Products never ordered","0"
+*/
 
 -- ============================================================================

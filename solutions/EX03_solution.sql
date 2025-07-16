@@ -450,7 +450,32 @@ ORDER BY total_spent DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    p.product_category_name,
+    COUNT(p.product_id) as product_count,
+    ROUND(AVG(oi.price), 2) as avg_price,
+    ROUND(MIN(oi.price), 2) as min_price,
+    ROUND(MAX(oi.price), 2) as max_price,
+    ROUND(MAX(oi.price) - MIN(oi.price), 2) as price_range,
+    COUNT(CASE WHEN oi.price < 20 THEN 1 END) as cheap_products,
+    COUNT(CASE WHEN oi.price BETWEEN 20 AND 100 THEN 1 END) as medium_products,
+    COUNT(CASE WHEN oi.price > 100 THEN 1 END) as expensive_products
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+WHERE p.product_category_name IS NOT NULL
+GROUP BY p.product_category_name
+ORDER BY avg_price DESC;
 
+/* Output:
+"product_category_name","product_count","avg_price","min_price","max_price","price_range","cheap_products","medium_products","expensive_products"
+"pcs","203","1098.34","34.50","6729.00","6694.50","0","1","202"
+"portateis_casa_forno_e_cafe","76","624.29","10.19","2899.00","2888.81","2","20","54"
+"eletrodomesticos_2","238","476.12","13.90","2350.00","2336.10","10","23","205"
+...
+"fraldas_higiene","39","40.19","25.00","139.89","114.89","0","37","2"
+"flores","33","33.64","15.60","65.90","50.30","7","26","0"
+"casa_conforto_2","30","25.34","12.90","219.99","207.09","26","2","2"
+*/
 
 
 -- ============================================================================

@@ -672,3 +672,17 @@ WHERE oi.product_id IS NULL;
 */
 
 -- ============================================================================
+
+/*
+Insights:
+1. The top sellers are concentrated in the state of SP, with high total revenue and unique products sold.
+2. Poor customer reviews are common, with many customers expressing dissatisfaction with product quality and delivery.
+3. Sales are heavily influenced by customer location, with SP, RJ, and MG being the top states in terms of revenue and order volume.
+4. Product categories like "beleza_saude" and "relogios_presentes" generate the most revenue, indicating strong consumer interest in these areas.
+5. Customer lifetime value varies significantly, with some customers spending over 13,000 BRL, while others have only made a single purchase.
+6. Payment preferences vary by region, with credit cards being the most common payment method, especially in states like SP and RJ.
+7. Data quality issues exist, particularly with orders missing payment information and some orders without any items, indicating potential gaps in the order processing system.
+8. The relationship between products and sellers shows that certain categories have strong seller partnerships, particularly in "cama_mesa_banho" and "cool_stuff".
+9. The average order value is highest in the "beleza_saude" category, suggesting premium pricing strategies.
+10. The analysis highlights the importance of understanding customer behavior, product performance, and payment trends to optimize business strategies and improve customer satisfaction.
+*/

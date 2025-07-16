@@ -514,8 +514,30 @@ NULL,"araucaria","PR","7","33.46","4.78","1"
 
 -- Your SQL query here:
 
+SELECT 
+    c.customer_state,
+    op.payment_type,
+    COUNT(op.order_id) as payment_count,
+    ROUND(SUM(op.payment_value), 2) as total_payment_value,
+    ROUND(AVG(op.payment_value), 2) as avg_payment_value,
+    ROUND(AVG(op.payment_installments), 2) as avg_installments,
+    ROUND(100.0 * COUNT(op.order_id) / SUM(COUNT(op.order_id)) OVER (PARTITION BY c.customer_state), 2) as pct_of_state_payments
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+INNER JOIN order_payments op ON o.order_id = op.order_id
+GROUP BY c.customer_state, op.payment_type
+ORDER BY c.customer_state, payment_count DESC;
 
-
+/* Output:
+"customer_state","payment_type","payment_count","total_payment_value","avg_payment_value","avg_installments","pct_of_state_payments"
+"AC","credit_card","61","14625.41","239.76","4.5","72.62"
+"AC","boleto","16","3908.46","244.28","1.0","19.05"
+"AC","voucher","5","797.13","159.43","1.0","5.95"
+...
+"TO","boleto","76","13287.28","174.83","1.0","25.25"
+"TO","voucher","24","1442.07","60.09","1.0","7.97"
+"TO","debit_card","4","896.65","224.16","1.0","1.33"
+*/
 
 -- ============================================================================
 -- QUESTION 11: Comprehensive Order Details

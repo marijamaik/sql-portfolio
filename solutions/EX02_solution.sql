@@ -456,8 +456,27 @@ ORDER BY seller_state, seller_city;
 
 -- Your SQL query here:
 
+SELECT 
+    order_id,
+    order_purchase_timestamp,
+    order_delivered_customer_date,
+    DATE_PART('day', order_delivered_customer_date - order_purchase_timestamp) AS delivery_time_days
+FROM orders
+WHERE EXTRACT(YEAR FROM order_purchase_timestamp) = 2017
+  AND EXTRACT(MONTH FROM order_purchase_timestamp) = 12
+  AND order_status = 'delivered'
+  AND order_delivered_customer_date IS NOT NULL
+ORDER BY delivery_time_days ASC;
 
-
+/* Output:
+"order_id","order_purchase_timestamp","order_delivered_customer_date","delivery_time_days"
+"0ad3d55b3745d0afb5dd2d9f86c25dbb","2017-12-28 00:09:13","2017-12-29 16:02:55","1"
+"3e30e6710e775ebfeecbd90fad476396","2017-12-11 18:18:04","2017-12-13 17:29:13","1"
+...
+"e52c9dfec957c503bed5d050a39c740f","2017-12-09 18:49:23","2018-03-27 01:57:14","107"
+"29c3b79aace1b72a82b1232bf494e16f","2017-12-16 10:04:35","2018-04-28 15:51:50","133"
+"0b7b12a402b064d880d3cb31051f6d29","2017-12-02 14:49:30","2018-04-19 21:18:52","138"
+*/
 
 -- ============================================================================
 -- QUESTION 12: NULL Value Handling

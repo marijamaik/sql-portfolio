@@ -99,8 +99,36 @@ ORDER BY total_revenue DESC;
 
 -- Your SQL query here:
 
+SELECT
+    customer_state,
+    COUNT(DISTINCT customer_id) AS customer_count,
+    ROUND(100.0 * COUNT(DISTINCT customer_id) / SUM(COUNT(DISTINCT customer_id)) OVER (), 2) AS percentage_of_total
+FROM customers
+WHERE customer_state IS NOT NULL
+GROUP BY customer_state
+HAVING COUNT(DISTINCT customer_id) >= 500
+ORDER BY customer_count DESC;
 
-
+/* Output:
+"customer_state","customer_count","percentage_of_total"
+"SP","41746","43.12"
+"RJ","12852","13.27"
+"MG","11635","12.02"
+"RS","5466","5.65"
+"PR","5045","5.21"
+"SC","3637","3.76"
+"BA","3380","3.49"
+"DF","2140","2.21"
+"ES","2033","2.10"
+"GO","2020","2.09"
+"PE","1652","1.71"
+"CE","1336","1.38"
+"PA","975","1.01"
+"MT","907","0.94"
+"MA","747","0.77"
+"MS","715","0.74"
+"PB","536","0.55"
+*/
 
 -- ============================================================================
 -- QUESTION 4: Product Category Performance

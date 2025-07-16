@@ -411,8 +411,29 @@ ORDER BY EXTRACT(DOW FROM order_purchase_timestamp);
 
 -- Your SQL query here:
 
+SELECT 
+    o.customer_id,
+    ROUND(SUM(op.payment_value), 2) AS total_spent,
+    COUNT(DISTINCT o.order_id) AS order_count,
+    ROUND(AVG(op.payment_value), 2) AS avg_order_value,
+    MIN(o.order_purchase_timestamp) AS first_order_date,
+    MAX(o.order_purchase_timestamp) AS last_order_date
+FROM orders o
+JOIN order_payments op ON o.order_id = op.order_id
+GROUP BY o.customer_id
+HAVING SUM(op.payment_value) > 1000
+ORDER BY total_spent DESC;
 
-
+/* Output:
+"customer_id","total_spent","order_count","avg_order_value","first_order_date","last_order_date"
+"1617b1357756262bfa56ab541c47bc16","13664.08","1","13664.08","2017-09-29 15:24:52","2017-09-29 15:24:52"
+"ec5b2ba62e574342386871631fafd3fc","7274.88","1","7274.88","2018-07-15 14:49:44","2018-07-15 14:49:44"
+"c6e2731c5b391845f6800c97401a43a9","6929.31","1","6929.31","2017-02-12 20:37:36","2017-02-12 20:37:36"
+...
+"6889c34115335ccadf584370c38907cd","1002.79","1","1002.79","2018-03-21 14:55:23","2018-03-21 14:55:23"
+"be523244d4c82364537fea5641c2149f","1002.73","1","1002.73","2018-07-21 14:32:36","2018-07-21 14:32:36"
+"3af442112f104fadd55d6861a864b21f","1002.71","1","1002.71","2018-03-15 15:43:31","2018-03-15 15:43:31"
+*/
 
 -- ============================================================================
 -- QUESTION 11: Product Pricing Analysis

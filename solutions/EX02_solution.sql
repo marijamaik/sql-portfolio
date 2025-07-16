@@ -228,16 +228,46 @@ LIMIT 15;
 -- QUESTION 6: Product Category Search
 -- ============================================================================
 -- Business Question: What electronics do we sell?
--- Write a query to find products in categories containing 'electronics':
--- - Use LIKE operator to find categories with 'electronic' in the name
+-- Write a query to find products in categories containing 'eletronicos':
+-- - Use LIKE operator to find categories with 'eletronicos' in the name
 -- - Show: product_id, product_category_name
 -- - Count how many products are in electronics categories
 -- - Sort by product_id
 
 -- Your SQL query here:
 
+SELECT 
+    product_id,
+    product_category_name,
+    COUNT(*) AS total_electronic_products
+FROM products
+WHERE product_category_name LIKE '%eletronicos%'
+GROUP BY product_id, product_category_name
+ORDER BY product_id;
 
+/* Output:
+"product_id","product_category_name","total_electronic_products"
+"00f8c37377b038c9c791128d2f928111","eletronicos","1"
+"01604238fbc11ce379e537a76b26bc94","eletronicos","1"
+"01cf56cd6138b926a4802d16fc304149","eletronicos","1"
+"01ecf875ab885ebcae3dd2b1ccc4715f","eletronicos","1"
+"026ddfe4a1a29002815e6da024d6128e","eletronicos","1"
+"02b824e9f1158bc1005e058c4ea78e8d","eletronicos","1"
+...
+"ff8ff756fe1137ed22300ccd2190703a","eletronicos","1"
+"ffa255211c5d16ec8ebadcb5729c96ce","eletronicos","1"
+*/
 
+-- Count total electronic products:
+SELECT 
+    COUNT(*) AS total_electronic_products
+FROM products
+WHERE product_category_name ILIKE '%eletronicos%';
+
+/* Output:
+"total_electronic_products"
+"517"
+*/
 
 -- ============================================================================
 -- QUESTION 7: Customer Review Quality

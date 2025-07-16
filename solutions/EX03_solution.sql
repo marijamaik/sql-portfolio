@@ -143,7 +143,32 @@ ORDER BY customer_count DESC;
 
 -- Your SQL query here:
 
+SELECT
+    p.product_category_name,
+    COUNT(DISTINCT p.product_id) AS unique_products,
+    SUM(oi.order_item_id) AS total_quantity_sold,
+    SUM(oi.price * oi.order_item_id) AS total_revenue,
+    ROUND(AVG(oi.price), 2) AS avg_item_price
+FROM products p
+JOIN order_items oi ON p.product_id = oi.product_id
+GROUP BY p.product_category_name
+HAVING SUM(oi.order_item_id) > 0
+ORDER BY total_revenue DESC
+LIMIT 10;
 
+/* Output:
+"product_category_name","unique_products","total_quantity_sold","total_revenue","avg_item_price"
+"beleza_saude","2444","11081","1347468.49","130.16"
+"relogios_presentes","1329","6594","1259634.58","201.14"
+"cama_mesa_banho","3029","13665","1228795.46","93.30"
+"informatica_acessorios","1639","9874","1135454.64","116.51"
+"esporte_lazer","2867","9932","1082435.42","114.34"
+"moveis_decoracao","2657","11540","929520.95","87.56"
+"utilidades_domesticas","2335","9051","750233.73","90.79"
+"automotivo","1900","4881","662861.88","139.96"
+"cool_stuff","789","4077","659590.61","167.36"
+"ferramentas_jardim","753","5874","584155.02","111.63"
+*/
 
 
 -- ============================================================================

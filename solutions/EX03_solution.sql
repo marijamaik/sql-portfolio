@@ -266,7 +266,36 @@ ORDER BY avg_review_score DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    oi.seller_id,
+    COUNT(oi.order_item_id) as total_items_sold,
+    ROUND(SUM(oi.price), 2) as total_revenue,
+    COUNT(DISTINCT oi.order_id) as number_of_orders,
+    ROUND(AVG(oi.price), 2) as avg_item_price
+FROM order_items oi
+GROUP BY oi.seller_id
+HAVING COUNT(DISTINCT oi.order_id) >= 10
+ORDER BY total_revenue DESC
+LIMIT 15;
 
+/* Output:
+"seller_id","total_items_sold","total_revenue","number_of_orders","avg_item_price"
+"4869f7a5dfa277a7dca6462dcf3b52b2","1156","229472.63","1132","198.51"
+"53243585a1d6dc2643021fd1853d8905","410","222776.05","358","543.36"
+"4a3ca9315b744ce9f8e9374361493884","1987","200472.92","1806","100.89"
+"fa1c13f2614d7b5c4749cbc52fecda94","586","194042.03","585","331.13"
+"7c67e1448b00f6e969d365cea6b010ab","1364","187923.89","982","137.77"
+"7e93a43ef30c4f03f38b393420bc753a","340","176431.87","336","518.92"
+"da8622b14eb17ae2831f4ac5b9dab84a","1551","160236.57","1314","103.31"
+"7a67c85e85bb2ce8582c35f2203ad736","1171","141745.53","1160","121.05"
+"1025f0e2d44d7041d6cf58b6550e0bfa","1428","138968.55","915","97.32"
+"955fee9216a65b617aa5c0531780ce60","1499","135171.70","1287","90.17"
+"46dc3b2cc0980fb8ec44634e21d2718e","542","128111.19","521","236.37"
+"6560211a19b47992c3666cc44a7e94c0","2033","123304.83","1854","60.65"
+"620c87c171fb2a6dd6e8bb4dec959fc6","798","114774.50","740","143.83"
+"7d13fca15225358621be4086e1eb0964","578","113628.97","565","196.59"
+"5dceca129747e92ff8ef7a997dc4f8ca","346","112155.53","325","324.15"
+*/
 
 
 -- ============================================================================

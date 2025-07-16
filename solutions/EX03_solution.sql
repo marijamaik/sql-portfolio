@@ -517,3 +517,19 @@ ORDER BY order_count DESC;
 */
 
 -- ============================================================================
+
+/*
+Insights:
+- Monthly revenue shows a clear upward trend, especially in late 2017 and early 2018.
+- Credit cards dominate payment methods, accounting for over 73% of all payments.
+- SP is the largest customer state, with over 41,000 customers, followed by RJ and MG.
+- The "beleza_saude" category generates the highest revenue, followed by "relogios_presentes" and "cama_mesa_banho".
+- Most orders have only 1 item, but multi-item orders are significant contributors to revenue.
+- Customer reviews are generally positive, with "livros_interesse_geral" having the highest average review score.
+- Top sellers have high item counts and revenues, with the top seller generating over 229,000 BRL.
+- Delivery performance varies by state, with SP having the fastest average delivery time.
+- Shopping patterns show peak activity on Tuesdays and Wednesdays, with Fridays also performing well.
+- High-value customers are identified, with some spending over 13,000 BRL.
+- Product pricing varies widely, with "pcs" being the most expensive category on average.
+- Order processing times indicate efficient handling, with most orders being approved within 1 day and delivered within 9 days.
+*/

@@ -516,15 +516,16 @@ ORDER BY order_purchase_timestamp;
 
 /*
 Insights:
-- Date filtering reveals clear seasonal patterns (Dec 2017 peak)
-- Geographic concentration: SP dominates both customers and sellers
-- Price segmentation: Clear tiers in product pricing
-- Payment preferences: Credit cards dominate high-value orders
-- Status distribution: 97%+ delivery success rate
-- Electronics categories command premium pricing
-- São Paulo metropolitan area is core market
-- Credit card installments enable higher order values
-- Delivery performance varies significantly by geography
-- Customer satisfaction correlates with delivery speed
-- Data quality issues: Missing delivery dates for 'delivered' orders
+- High-value products are primarily in electronics and home appliances.
+- São Paulo has the highest number of customers, indicating a strong market presence.
+- Many orders are delayed, with some taking over 200 days to deliver.
+- Credit card payments dominate, especially for high-value orders.
+- Electronics categories are diverse, with many products available.
+- Poor reviews are rare, but when they occur, they often relate to delivery issues.
+- Small orders are common, but large orders (> 500 BRL) are significant for revenue.
+- Data quality issues exist with missing delivery dates for delivered orders, indicating potential system errors.
+- Major cities like São Paulo and Rio de Janeiro have a significant number of sellers, indicating strong market competition.
+- December 2017 saw a mix of fast and slow deliveries, with some orders taking over 100 days to deliver despite being marked as 'delivered'.
+- NULL values in delivery dates for delivered orders suggest data integrity issues that need to be addressed.
+- Overall, the dataset provides valuable insights into customer behavior, product performance, and operational challenges.
 */

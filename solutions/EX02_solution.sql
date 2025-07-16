@@ -420,7 +420,27 @@ LIMIT 20;
 
 -- Your SQL query here:
 
+SELECT 
+    seller_id,
+    seller_city,
+    seller_state
+FROM sellers
+WHERE LOWER(seller_city) IN ('sao paulo', 'rio de janeiro', 'belo horizonte')
+ORDER BY seller_state, seller_city;
 
+/* Output:
+"seller_id","seller_city","seller_state"
+"6df688df543f90e9b38f4319e75a9d88","belo horizonte","MG"
+"6cd68b3ed6d59aaa9fece558ad360c0a","belo horizonte","MG"
+...
+"d05ae8f7a5bd1d2a690a44cd079e4e27","rio de janeiro","RJ"
+"579891617139df7d8671d373f0669622","rio de janeiro","RJ"
+"392f7f2c797e4dc077e4311bde2ab8ce","rio de janeiro","RN"
+"289cdb325fb7e7f891c38608bf9e0962","belo horizonte","SP"
+...
+"95b293867b5862941c9cd74f756a3c68","sao paulo","SP"
+"e62b2d6ac10570a035a30bafcf01d263","sao paulo","SP"
+*/
 
 
 -- ============================================================================

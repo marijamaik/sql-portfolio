@@ -242,8 +242,45 @@ LIMIT 15;
 
 -- Your SQL query here:
 
+SELECT 
+    c.customer_city,
+    c.customer_state,
+    o.order_purchase_timestamp as order_date,
+    r.review_score,
+    r.review_creation_date as review_date,
+    r.review_comment_title,
+    LENGTH(COALESCE(r.review_comment_message, '')) as message_length,
+    EXTRACT(DAY FROM (r.review_creation_date - o.order_purchase_timestamp)) as days_to_review
+FROM order_reviews r
+INNER JOIN orders o ON r.order_id = o.order_id
+INNER JOIN customers c ON o.customer_id = c.customer_id
+WHERE r.review_score IN (1, 2)
+ORDER BY r.review_creation_date DESC
+LIMIT 20;
 
-
+/* Output:
+"customer_city","customer_state","order_date","review_score","review_date","review_comment_title","message_length","days_to_review"
+"sao jose do rio preto","SP","2018-08-24 02:13:16",1,"2018-08-31 00:00:00","Não recomendo.",193,"6"
+"botucatu","SP","2018-08-24 14:26:53",1,"2018-08-31 00:00:00",NULL,64,"6"
+"franco da rocha","SP","2018-08-22 07:25:32",2,"2018-08-31 00:00:00",NULL,125,"8"
+"dourados","MS","2018-08-14 18:03:56",1,"2018-08-31 00:00:00","ruim",94,"16"
+"sao paulo","SP","2018-08-26 12:38:57",1,"2018-08-31 00:00:00","Produto faltando ",118,"4"
+"sao paulo","SP","2018-08-28 22:30:32",2,"2018-08-31 00:00:00",NULL,39,"2"
+"timburi","SP","2018-08-23 18:27:44",2,"2018-08-31 00:00:00","Bom",94,"7"
+"belo horizonte","MG","2018-08-15 14:29:08",1,"2018-08-31 00:00:00",NULL,0,"15"
+"osasco","SP","2018-08-25 11:42:43",2,"2018-08-31 00:00:00","Produto riscado",0,"5"
+"sao paulo","SP","2018-08-24 14:30:31",1,"2018-08-31 00:00:00",NULL,108,"6"
+"sao paulo","SP","2018-08-24 13:59:41",1,"2018-08-31 00:00:00",NULL,0,"6"
+"sao paulo","SP","2018-08-18 06:29:22",2,"2018-08-31 00:00:00","Entrega de encomenda",109,"12"
+"jau","SP","2018-08-06 15:26:36",1,"2018-08-31 00:00:00","Informação\preocupada",167,"24"
+"sao paulo","SP","2018-08-24 18:00:29",1,"2018-08-31 00:00:00",NULL,0,"6"
+"campo bom","RS","2018-08-21 12:26:53",1,"2018-08-31 00:00:00","Não recebi meu produto",79,"9"
+"rio de janeiro","RJ","2018-08-22 14:18:02",1,"2018-08-31 00:00:00","Vcs precisam melhorar",199,"8"
+"sao paulo","SP","2018-08-29 12:25:59",1,"2018-08-31 00:00:00","Muito frágil !!!",125,"1"
+"brasilia","DF","2018-08-19 21:37:17",1,"2018-08-31 00:00:00",NULL,0,"11"
+"santo andre","SP","2018-08-26 11:44:34",1,"2018-08-31 00:00:00","O arejador veio errado",151,"4"
+"sao paulo","SP","2018-08-24 17:02:19",1,"2018-08-31 00:00:00",NULL,10,"6"
+*/
 
 -- ============================================================================
 -- QUESTION 6: Geographic Sales Analysis

@@ -1,22 +1,105 @@
 # SQL Skills Portfolio: E-Commerce Analytics
 
-## Project Objective
+## Project Overview
 
-This project demonstrates advanced SQL expertise through comprehensive analysis of e-commerce data. It showcases 25 progressively complex queries that solve real business problems while highlighting specific SQL techniques.
+Comprehensive SQL analysis of a Brazilian e-commerce dataset spanning 2016-2018, demonstrating advanced data analysis techniques and business intelligence insights. This project showcases proficiency in SQL querying, data exploration, aggregations, joins, and translating technical analysis into actionable business recommendations.
 
-### Core SQL Competencies Showcased:
-- **Complex JOINs** - Multi-table relationships with 5+ table joins
-- **Subqueries** - Correlated and non-correlated, including EXISTS/NOT EXISTS patterns
-- **Window Functions** - ROW_NUMBER, RANK, LAG/LEAD, NTILE, running totals
-- **CTEs** - Common Table Expressions for readable complex logic
-- **Recursive Queries** - Hierarchical data processing
+## Key Achievements
 
-### Query Complexity Levels:
-- **Foundation (15 queries)** - Multi-table operations, basic analytics
-- **Intermediate (10 queries)** - Window functions, CTEs, complex business logic
+- 97.02% order completion rate - Identified operational excellence indicators
+- 20x revenue growth - Tracked explosive business expansion over 24 months  
+- R$16M+ total revenue - Analyzed comprehensive marketplace performance
+- Geographic insights - Discovered São Paulo market dominance (43% of customers)
+- Customer satisfaction - 4.09/5 average rating across 98K+ reviews
 
+## Analysis Exercises
 
-## Dataset: Brazilian E-Commerce Public Dataset
+### Exercise 1: Data Exploration & Setup
+**Objective**: Understand dataset structure and verify data quality  
+**Skills**: Basic SELECT, COUNT, data types, table relationships  
+**Key Findings**:
+- 99,441 customers across 1M+ geolocation records
+- 97% order completion rate indicating strong operations
+- 77% positive customer reviews (4-5 stars)
+
+[View detailed insights](insights/EX01_insights.md) | [SQL queries](solutions/EX01_solution.sql)
+
+### Exercise 2: Basic Filtering & Sorting  
+**Objective**: Master WHERE clauses and ORDER BY statements  
+**Skills**: Filtering, sorting, LIKE patterns, date comparisons  
+**Key Findings**:
+- Premium products range R$100-6,735 showing luxury capability
+- Delivery challenges: some orders taking 200+ days
+- Strong São Paulo market penetration with rural expansion opportunities
+
+[View detailed insights](insights/EX02_insights.md) | [SQL queries](solutions/EX02_solution.sql)
+
+### Exercise 3: Aggregations & Grouping
+**Objective**: Calculate business metrics using aggregate functions  
+**Skills**: COUNT, SUM, AVG, GROUP BY, HAVING, business calculations  
+**Key Findings**:
+- Monthly revenue growth from R$59K to R$1.2M+ 
+- Credit cards dominate (74%) with R$12.5M total revenue
+- Beauty & Health leads categories with R$1.35M revenue
+
+[View detailed insights](insights/EX03_insights.md) | [SQL queries](solutions/EX03_solution.sql)
+
+### Exercise 4: Joins & Relationships
+**Objective**: Combine data from multiple tables using different JOIN types  
+**Skills**: INNER JOIN, LEFT JOIN, multi-table joins, relationship analysis  
+**Key Findings**:
+- Top seller generates R$229K with 1,156 items sold
+- Customer lifetime value opportunities: most high-value customers make single purchases
+- Excellent data integrity with minimal orphaned records
+
+[View detailed insights](insights/EX04_insights.md) | [SQL queries](solutions/EX04_solution.sql)
+
+## Executive Summary
+
+### Business Performance Highlights
+- **Platform Scale**: 32,951 products from 3,095 sellers
+- **Customer Base**: 99,441 customers with strong geographic diversity
+- **Revenue Growth**: Consistent month-over-month expansion through 2018
+- **Operational Excellence**: Industry-leading completion and satisfaction rates
+
+### Strategic Opportunities Identified
+1. **Geographic Expansion** - Reduce São Paulo concentration (43% of customers)
+2. **Delivery Optimization** - Address inconsistent delivery times (0-208 days range)
+3. **Customer Development** - Convert single high-value buyers to repeat customers
+4. **Category Enhancement** - Improve underperforming categories (furniture, men's fashion)
+
+### Critical Success Factors
+- Strong payment system supporting Brazilian market (credit cards + boleto)
+- Diverse product portfolio across 70+ categories
+- Effective seller ecosystem with volume and premium specialists
+- High customer satisfaction driving platform trust
+
+## Technical Skills Demonstrated
+
+**SQL Proficiency**:
+- Complex multi-table joins and subqueries
+- Advanced aggregation functions and window operations
+- Date/time manipulation and temporal analysis
+- Data quality assessment and relationship validation
+
+**Business Intelligence**:
+- KPI development and metric calculation
+- Customer segmentation and lifetime value analysis
+- Geographic and demographic market analysis
+- Operational performance measurement
+
+**Data Analysis**:
+- Revenue trend analysis and growth metrics
+- Customer behavior pattern identification
+- Product category performance evaluation
+- Seller ecosystem health assessment
+
+## Dataset Information
+
+**Source**: Brazilian E-commerce Public Dataset  
+**Period**: September 2016 - October 2018  
+**Scale**: 100K+ orders across Brazil  
+**Tables**: 8 core tables (customers, orders, products, sellers, payments, reviews, etc.)
 
 Source: Kaggle - Brazilian E-Commerce Public Dataset by Olist 
 
@@ -29,58 +112,3 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 - Clean structure - Well-normalized, production-quality data
 - Appropriate size - 100K orders, manageable for learning
 - No sensitive data - Anonymized, safe for portfolio use
-
-### Dataset Overview
-
-- Orders: 99,441 orders from 2016-2018
-- Customers: 99,441 unique customers
-- Products: 32,951 products across 74 categories
-- Reviews: 99,224 customer reviews with ratings
-- Sellers: 3,095 sellers across Brazil
-- Geography: Order locations across Brazilian states
-
-## Query Categories
-### Foundational Queries (15 total)
-#### Data Exploration & Basic Analysis
-
-- 01_basic_exploration.sql - Dataset overview and record counts
-- 02_customer_analysis.sql - Customer demographics and behavior
-- 03_product_performance.sql - Best-selling products and categories
-- 04_geographic_analysis.sql - Sales by Brazilian states and cities
-- 05_temporal_trends.sql - Monthly and seasonal sales patterns
-
-#### Business Metrics & KPIs
-
-- 06_order_analysis.sql - Order sizes, values, and fulfillment
-- 07_seller_performance.sql - Top sellers and performance metrics
-- 08_payment_analysis.sql - Payment methods and installment patterns
-- 09_shipping_analysis.sql - Delivery times and logistics performance
-- 10_review_analysis.sql - Customer satisfaction and review patterns
-
-#### Advanced Filtering & Calculations
-
-- 11_customer_value.sql - Customer lifetime value and spending tiers
-- 12_product_categories.sql - Category performance and trends
-- 13_price_analysis.sql - Pricing strategies and price ranges
-- 14_seasonal_analysis.sql - Holiday and seasonal shopping patterns
-- 15_data_quality.sql - Missing data analysis and cleanup
-
-### Intermediate Queries (10 total)
-#### Analytics & Segmentation
-
-- 01_customer_segmentation.sql - RFM analysis and customer tiers
-- 02_cohort_analysis.sql - Customer retention by acquisition month
-- 03_product_recommendations.sql - Frequently bought together analysis
-- 04_customer_journey.sql - Purchase patterns and lifecycle analysis
-
-#### Advanced Calculations
-
-- 05_moving_averages.sql - Sales trends with window functions
-- 06_ranking_analysis.sql - Top performers with ranking functions
-- 07_growth_analysis.sql - Year-over-year and month-over-month growth
-- 08_geographic_insights.sql - Regional performance with CTEs
-
-#### Business Intelligence
-
-- 09_seller_analytics.sql - Seller performance scorecard
-- 10_executive_summary.sql - Key metrics dashboard query

@@ -188,6 +188,40 @@ ORDER BY days_to_delivery DESC NULLS LAST;
 
 -- Your SQL query here:
 
+SELECT 
+    s.seller_id,
+    s.seller_city,
+    s.seller_state,
+    COUNT(oi.order_item_id) as total_items_sold,
+    ROUND(SUM(oi.price), 2) as total_revenue,
+    ROUND(AVG(oi.price), 2) as avg_item_price,
+    COUNT(DISTINCT oi.product_id) as unique_products,
+    COUNT(DISTINCT oi.order_id) as unique_orders
+FROM sellers s
+INNER JOIN order_items oi ON s.seller_id = oi.seller_id
+GROUP BY s.seller_id, s.seller_city, s.seller_state
+HAVING COUNT(oi.order_item_id) >= 10
+ORDER BY total_revenue DESC
+LIMIT 15;
+
+/* Output:
+"seller_id","seller_city","seller_state","total_items_sold","total_revenue","avg_item_price","unique_products","unique_orders"
+"4869f7a5dfa277a7dca6462dcf3b52b2","guariba","SP","1156","229472.63","198.51","95","1132"
+"53243585a1d6dc2643021fd1853d8905","lauro de freitas","BA","410","222776.05","543.36","23","358"
+"4a3ca9315b744ce9f8e9374361493884","ibitinga","SP","1987","200472.92","100.89","399","1806"
+"fa1c13f2614d7b5c4749cbc52fecda94","sumare","SP","586","194042.03","331.13","289","585"
+"7c67e1448b00f6e969d365cea6b010ab","itaquaquecetuba","SP","1364","187923.89","137.77","198","982"
+"7e93a43ef30c4f03f38b393420bc753a","barueri","SP","340","176431.87","518.92","186","336"
+"da8622b14eb17ae2831f4ac5b9dab84a","piracicaba","SP","1551","160236.57","103.31","222","1314"
+"7a67c85e85bb2ce8582c35f2203ad736","sao paulo","SP","1171","141745.53","121.05","149","1160"
+"1025f0e2d44d7041d6cf58b6550e0bfa","sao paulo","SP","1428","138968.55","97.32","154","915"
+"955fee9216a65b617aa5c0531780ce60","sao paulo","SP","1499","135171.70","90.17","104","1287"
+"46dc3b2cc0980fb8ec44634e21d2718e","rio de janeiro","RJ","542","128111.19","236.37","189","521"
+"6560211a19b47992c3666cc44a7e94c0","sao paulo","SP","2033","123304.83","60.65","256","1854"
+"620c87c171fb2a6dd6e8bb4dec959fc6","petropolis","RJ","798","114774.50","143.83","129","740"
+"7d13fca15225358621be4086e1eb0964","ribeirao preto","SP","578","113628.97","196.59","57","565"
+"5dceca129747e92ff8ef7a997dc4f8ca","santa barbara d´oeste","SP","346","112155.53","324.15","48","325"
+*/
 
 
 

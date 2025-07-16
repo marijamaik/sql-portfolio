@@ -470,7 +470,30 @@ LIMIT 25;
 
 -- Your SQL query here:
 
+SELECT 
+    p.product_category_name,
+    s.seller_city,
+    s.seller_state,
+    COUNT(oi.order_item_id) as transaction_count,
+    ROUND(SUM(oi.price), 2) as total_revenue,
+    ROUND(AVG(oi.price), 2) as avg_price_per_item,
+    COUNT(DISTINCT p.product_id) as unique_products_sold
+FROM products p
+INNER JOIN order_items oi ON p.product_id = oi.product_id
+INNER JOIN sellers s ON oi.seller_id = s.seller_id
+GROUP BY p.product_category_name, s.seller_city, s.seller_state
+HAVING COUNT(oi.order_item_id) >= 5
+ORDER BY total_revenue DESC;
 
+/* Output:
+"product_category_name","seller_city","seller_state","transaction_count","total_revenue","avg_price_per_item","unique_products_sold"
+"cama_mesa_banho","ibitinga","SP","6039","503829.64","83.43","1659"
+"cool_stuff","sao paulo","SP","1970","286211.73","145.29","287"
+...
+"livros_interesse_geral","mogi mirim","SP","5","54.50","10.90","2"
+"perfumaria","colombo","PR","5","50.70","10.14","4"
+NULL,"araucaria","PR","7","33.46","4.78","1"
+*/
 
 
 -- ============================================================================

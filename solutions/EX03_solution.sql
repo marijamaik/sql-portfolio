@@ -186,8 +186,30 @@ LIMIT 10;
 
 -- Your SQL query here:
 
+-- Calculate order characteristics
+WITH order_metrics AS (
+    SELECT 
+        oi.order_id,
+        COUNT(oi.order_item_id) as items_per_order,
+        ROUND(SUM(oi.price), 2) as order_value
+    FROM order_items oi
+    GROUP BY oi.order_id
+)
+-- Summarize the results
+SELECT 
+    ROUND(AVG(items_per_order), 2) as avg_items_per_order,
+    ROUND(AVG(order_value), 2) as avg_order_value,
+    ROUND(MIN(order_value), 2) as min_order_value,
+    ROUND(MAX(order_value), 2) as max_order_value,
+    COUNT(CASE WHEN items_per_order = 1 THEN 1 END) as single_item_orders,
+    COUNT(CASE WHEN items_per_order > 1 THEN 1 END) as multi_item_orders,
+    ROUND(100.0 * COUNT(CASE WHEN items_per_order = 1 THEN 1 END) / COUNT(*), 2) as single_item_percentage
+FROM order_metrics;
 
-
+/* Output:
+"avg_items_per_order","avg_order_value","min_order_value","max_order_value","single_item_orders","multi_item_orders","single_item_percentage"
+"1.14","137.75","0.85","13440.00","88863","9803","90.06"
+*/
 
 -- ============================================================================
 -- QUESTION 6: Customer Review Patterns

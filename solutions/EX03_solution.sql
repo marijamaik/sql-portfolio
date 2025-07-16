@@ -493,7 +493,27 @@ ORDER BY avg_price DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    order_status,
+    COUNT(*) as order_count,
+    ROUND(AVG(EXTRACT(DAY FROM (order_approved_at - order_purchase_timestamp))), 1) as avg_approval_days,
+    ROUND(AVG(EXTRACT(DAY FROM (order_delivered_carrier_date - order_approved_at))), 1) as avg_shipping_days,
+    ROUND(AVG(EXTRACT(DAY FROM (order_delivered_customer_date - order_delivered_carrier_date))), 1) as avg_delivery_days
+FROM orders
+WHERE order_purchase_timestamp IS NOT NULL
+GROUP BY order_status
+ORDER BY order_count DESC;
 
-
+/* Output:
+"order_status","order_count","avg_approval_days","avg_shipping_days","avg_delivery_days"
+"delivered","96478","0.3","2.3","8.9"
+"shipped","1107","0.3","2.8",NULL
+"canceled","625","0.5","2.8","13.0"
+"unavailable","609","0.8",NULL,NULL
+"invoiced","314","0.2",NULL,NULL
+"processing","301","0.6",NULL,NULL
+"created","5",NULL,NULL,NULL
+"approved","2","2.5",NULL,NULL
+*/
 
 -- ============================================================================

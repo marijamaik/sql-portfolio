@@ -556,8 +556,40 @@ ORDER BY c.customer_state, payment_count DESC;
 
 -- Your SQL query here:
 
+SELECT 
+    oi.order_id,
+    oi.product_id,
+    p.product_category_name,
+    p.product_weight_g,
+    oi.order_item_id,
+    oi.price,
+    oi.freight_value,
+    o.order_purchase_timestamp::DATE as order_date,
+    o.order_status,
+    c.customer_city,
+    c.customer_state,
+    s.seller_city,
+    s.seller_state
+FROM order_items oi
+INNER JOIN products p ON oi.product_id = p.product_id
+INNER JOIN orders o ON oi.order_id = o.order_id
+INNER JOIN customers c ON o.customer_id = c.customer_id
+INNER JOIN sellers s ON oi.seller_id = s.seller_id
+WHERE o.order_purchase_timestamp >= '2017-10-01'
+  AND o.order_purchase_timestamp < '2018-01-01'
+ORDER BY o.order_purchase_timestamp, oi.order_id
+LIMIT 50;
 
-
+/* Output:
+"order_id","product_id","product_category_name","product_weight_g","order_item_id","price","freight_value","order_date","order_status","customer_city","customer_state","seller_city","seller_state"
+"80c86e92eef37052119cf0e9a402000a","f908d3bf313a1308bfb2a46ea2685347","brinquedos","100.00",1,"35.00","7.78","2017-10-01","delivered","vinhedo","SP","sao paulo","SP"
+"f9a6e72c6b5a49a9aaa0a85b32adc581","71da6d6632902431cdca2b3a8e681b80","beleza_saude","1225.00",1,"184.60","18.54","2017-10-01","delivered","curitiba","PR","scao jose do rio pardo","SP"
+"aefefdda7b7a272ca35c44b82b643104","f177b434709ecb652dbee4f4b19aef2f","fashion_bolsas_e_acessorios","200.00",1,"29.99","31.02","2017-10-01","delivered","sao luis","MA","porto alegre","RS"
+...
+"596428e20f127315255e853fb6f851fe","1612209b0b37fbe80e1e8e1b7d19ca1d","informatica_acessorios","1600.00",1,"99.00","17.94","2017-10-01","delivered","porecatu","PR","porto alegre","RS"
+"f73e50c9dd2f26840757a746b2c8cb15","a50acd33ba7a8da8e9db65094fa990a4","automotivo","4105.00",1,"117.30","17.53","2017-10-01","delivered","pirangi","SP","guarulhos","SP"
+"b7790d729c085173e21678723b6e5381","55945cf4a4e6def88dcc8996a581608a","beleza_saude","275.00",1,"99.49","9.44","2017-10-01","delivered","sao paulo","SP","praia grande","SP"
+*/
 
 -- ============================================================================
 -- QUESTION 12: Data Quality Assessment
